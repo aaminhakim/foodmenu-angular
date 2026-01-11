@@ -1,1 +1,59 @@
-<p>menu works!</p>
+<h2>Food Menu</h2>
+
+<form (ngSubmit)="saveMenu()">
+  <input
+    type="text"
+    placeholder="Name"
+    [(ngModel)]="menu.name"
+    name="name"
+    required
+  />
+
+  <input
+    type="text"
+    placeholder="Description"
+    [(ngModel)]="menu.description"
+    name="description"
+  />
+
+  <input
+    type="number"
+    placeholder="Price"
+    [(ngModel)]="menu.price"
+    name="price"
+    required
+  />
+
+  <button type="submit">
+    {{ isEdit ? 'Update' : 'Add' }} Menu
+  </button>
+
+  <button type="button" (click)="resetForm()" *ngIf="isEdit">
+    Cancel
+  </button>
+</form>
+
+<hr />
+
+<table border="1" width="100%">
+  <thead>
+    <tr>
+      <th>Name</th>
+      <th>Description</th>
+      <th>Price</th>
+      <th>Actions</th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <tr *ngFor="let m of menus">
+      <td>{{ m.name }}</td>
+      <td>{{ m.description }}</td>
+      <td>{{ m.price | currency }}</td>
+      <td>
+        <button (click)="editMenu(m)">Edit</button>
+        <button (click)="deleteMenu(m.id)">Delete</button>
+      </td>
+    </tr>
+  </tbody>
+</table>
