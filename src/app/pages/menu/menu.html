@@ -1,59 +1,88 @@
-<h2>Food Menu</h2>
+<div class="container mt-4">
 
-<form (ngSubmit)="saveMenu()">
-  <input
-    type="text"
-    placeholder="Name"
-    [(ngModel)]="menu.name"
-    name="name"
-    required
-  />
+  <h2 class="mb-4">Food Menu</h2>
 
-  <input
-    type="text"
-    placeholder="Description"
-    [(ngModel)]="menu.description"
-    name="description"
-  />
+  <form (ngSubmit)="saveMenu()" class="row g-3 mb-4">
+    <div class="col-md-4">
+      <input
+        type="text"
+        class="form-control"
+        placeholder="Name"
+        [(ngModel)]="menu.name"
+        name="name"
+        required
+      />
+    </div>
 
-  <input
-    type="number"
-    placeholder="Price"
-    [(ngModel)]="menu.price"
-    name="price"
-    required
-  />
+    <div class="col-md-4">
+      <input
+        type="text"
+        class="form-control"
+        placeholder="Description"
+        [(ngModel)]="menu.description"
+        name="description"
+      />
+    </div>
 
-  <button type="submit">
-    {{ isEdit ? 'Update' : 'Add' }} Menu
-  </button>
+    <div class="col-md-2">
+      <input
+        type="number"
+        class="form-control"
+        placeholder="Price"
+        [(ngModel)]="menu.price"
+        name="price"
+        required
+      />
+    </div>
 
-  <button type="button" (click)="resetForm()" *ngIf="isEdit">
-    Cancel
-  </button>
-</form>
+    <div class="col-md-2 d-flex gap-2">
+      <button class="btn btn-primary" type="submit">
+        {{ isEdit ? 'Update' : 'Add' }}
+      </button>
 
-<hr />
+      <button
+        class="btn btn-secondary"
+        type="button"
+        (click)="resetForm()"
+        *ngIf="isEdit"
+      >
+        Cancel
+      </button>
+    </div>
+  </form>
 
-<table border="1" width="100%">
-  <thead>
-    <tr>
-      <th>Name</th>
-      <th>Description</th>
-      <th>Price</th>
-      <th>Actions</th>
-    </tr>
-  </thead>
+  <table class="table table-bordered table-striped">
+    <thead class="table-dark">
+      <tr>
+        <th>Name</th>
+        <th>Description</th>
+        <th>Price</th>
+        <th style="width: 160px">Actions</th>
+      </tr>
+    </thead>
 
-  <tbody>
-    <tr *ngFor="let m of menus">
-      <td>{{ m.name }}</td>
-      <td>{{ m.description }}</td>
-      <td>{{ m.price | currency }}</td>
-      <td>
-        <button (click)="editMenu(m)">Edit</button>
-        <button (click)="deleteMenu(m.id)">Delete</button>
-      </td>
-    </tr>
-  </tbody>
-</table>
+    <tbody>
+      <tr *ngFor="let m of menus">
+        <td>{{ m.name }}</td>
+        <td>{{ m.description }}</td>
+        <td>{{ m.price | currency }}</td>
+        <td>
+          <button
+            class="btn btn-sm btn-warning me-2"
+            (click)="editMenu(m)"
+          >
+            Edit
+          </button>
+
+          <button
+            class="btn btn-sm btn-danger"
+            (click)="deleteMenu(m.id)"
+          >
+            Delete
+          </button>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+
+</div>
