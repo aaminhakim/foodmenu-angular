@@ -10,12 +10,12 @@ export const routes: Routes = [
     path: 'login',
     loadComponent: () =>
       import('./pages/login/login')
-        .then(m => m.Login)
+        .then(m => m.LoginComponent)
   },
   {
     path: 'menu',
     loadComponent: () =>
       import('./pages/menu/menu')
-        .then(m => m.Menu)
+        .then(m => m.MenuComponent)
   }
 ];
