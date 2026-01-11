@@ -2,7 +2,7 @@
 
   <h2 class="mb-4">Food Menu</h2>
 
-  <form (ngSubmit)="saveMenu()" class="row g-3 mb-4">
+  <form #menuForm="ngForm" (ngSubmit)="saveMenu()" class="row g-3 mb-4">
     <div class="col-md-4">
       <input
         type="text"
@@ -10,8 +10,12 @@
         placeholder="Name"
         [(ngModel)]="menu.name"
         name="name"
+        #nameCtrl="ngModel"
         required
       />
+      <small class="text-danger" *ngIf="nameCtrl.invalid && nameCtrl.touched">
+        Name is required
+      </small>
     </div>
 
     <div class="col-md-4">
@@ -21,7 +25,12 @@
         placeholder="Description"
         [(ngModel)]="menu.description"
         name="description"
+        #descCtrl="ngModel"
+        required
       />
+      <small class="text-danger" *ngIf="descCtrl.invalid && descCtrl.touched">
+        Description is required
+      </small>
     </div>
 
     <div class="col-md-2">
@@ -31,12 +40,17 @@
         placeholder="Price"
         [(ngModel)]="menu.price"
         name="price"
+        #priceCtrl="ngModel"
         required
+        min="0.01"
       />
+      <small class="text-danger" *ngIf="priceCtrl.invalid && priceCtrl.touched">
+        Price must be greater than 0
+      </small>
     </div>
 
     <div class="col-md-2 d-flex gap-2">
-      <button class="btn btn-primary" type="submit">
+      <button class="btn btn-primary" type="submit" [disabled]="menuForm.invalid">
         {{ isEdit ? 'Update' : 'Add' }}
       </button>
 

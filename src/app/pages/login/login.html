@@ -1,29 +1,79 @@
-<h2>Login</h2>
+<div class="container mt-5" style="max-width: 400px;">
+  <h3 class="text-center mb-3">
+    {{ isRegister ? 'Register' : 'Login' }}
+  </h3>
 
-<form (ngSubmit)="login()">
-  <div class="container mt-5" style="max-width: 400px;">
-  <input
-    type="text"
-    class="form-control"
-    placeholder="Username"
-    [(ngModel)]="username"
-    name="username"
-    required
-  />
+  <form #f="ngForm" (ngSubmit)="submit()" novalidate>
 
+    <!-- Username -->
+    <div class="mb-3">
+      <input
+        type="text"
+        class="form-control"
+        placeholder="Username"
+        name="username"
+        [(ngModel)]="username"
+        #usernameCtrl="ngModel"
+        required
+      />
+      <small class="text-danger" *ngIf="usernameCtrl.invalid && usernameCtrl.touched">
+        Username is required
+      </small>
+    </div>
 
-  <input
-    type="password"
-    class="form-control"
-    placeholder="Password"
-    [(ngModel)]="password"
-    name="password"
-    required
-  />
+    <!-- Email (Register only) -->
+    <div class="mb-3" *ngIf="isRegister">
+      <input
+        type="email"
+        class="form-control"
+        placeholder="Email"
+        name="email"
+        [(ngModel)]="email"
+        #emailCtrl="ngModel"
+        required
+      />
+      <small class="text-danger" *ngIf="emailCtrl.invalid && emailCtrl.touched">
+        Email is required
+      </small>
+    </div>
 
+    <!-- Password -->
+    <div class="mb-3">
+      <input
+        type="password"
+        class="form-control"
+        placeholder="Password"
+        name="password"
+        [(ngModel)]="password"
+        #passwordCtrl="ngModel"
+        required
+      />
+      <small class="text-danger" *ngIf="passwordCtrl.invalid && passwordCtrl.touched">
+        Password is required
+      </small>
+    </div>
 
-  <button type="submit" class="btn btn-primary">Login</button>
+    <!-- Error from backend -->
+    <div *ngIf="error" class="alert alert-danger">
+      {{ error }}
+    </div>
+
+    <button
+      class="btn btn-primary w-100"
+      type="submit"
+      [disabled]="f.invalid"
+    >
+      {{ isRegister ? 'Register' : 'Login' }}
+    </button>
+  </form>
+
+  <div class="text-center mt-3">
+    <button
+      type="button"
+      class="btn btn-link"
+      (click)="isRegister = !isRegister; error=''; resetForm()"
+    >
+      {{ isRegister ? 'Already have an account? Login' : 'No account? Register' }}
+    </button>
   </div>
-</form>
-
-<p style="color:red">{{ error }}</p>
+</div>
